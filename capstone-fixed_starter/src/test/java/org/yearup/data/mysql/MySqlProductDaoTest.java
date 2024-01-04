@@ -64,7 +64,6 @@ class MySqlProductDaoTest extends BaseDaoTestClass
         BigDecimal maxPrice = BigDecimal.valueOf(90.0);
         String color = "Charcoal";
 
-
         Product expected = new Product();
         expected.setProductId(13);
         expected.setName("Fitness Tracker");
@@ -76,17 +75,13 @@ class MySqlProductDaoTest extends BaseDaoTestClass
         expected.setFeatured(true);
         expected.setImageUrl("fitness-tracker.jpg");
 
-
         // Act
         List<Product> actual = dao.search(categoryID, minPrice, maxPrice, color);
-
 
         // Assert
         assertEquals(1, actual.size(), "Expected number of products");
 
-
         Product actualProduct = actual.get(0);
-
 
         assertEquals(expected.getProductId(), actualProduct.getProductId(), "Product ID matches");
         assertEquals(expected.getName(), actualProduct.getName(), "Name matches");
