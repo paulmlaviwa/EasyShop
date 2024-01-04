@@ -7,27 +7,24 @@ class ShoppingCartService {
         total:0
     };
 
-    addToCart(productId)
-    {
-        const url = `${config.baseUrl}/cart/products/${productId}`;
-        // const headers = userService.getHeaders();
+    addToCart(productId) {
+            const url = `${config.baseUrl}/cart/products/${productId}`;
 
-        axios.post(url, {})// ,{headers})
-            .then(response => {
-                this.setCart(response.data)
+            axios.post(url, {})
+                .then(response => {
+                    this.setCart(response.data);
+                    this.updateCartDisplay();
 
-                this.updateCartDisplay()
-
-            })
-            .catch(error => {
-
-                const data = {
-                    error: "Add to cart failed."
-                };
-
-                templateBuilder.append("error", data, "errors")
-            })
-    }
+                    // Reload cart after successful addition
+                    this.loadCart();
+                })
+                .catch(error => {
+                    const data = {
+                        error: "Add to cart failed."
+                    };
+                    templateBuilder.append("error", data, "errors");
+                });
+        }
 
     setCart(data)
     {
