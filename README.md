@@ -35,6 +35,8 @@ Issues that we encountered as we worked:
   
   2: Postman- Had trouble with postman tests because while items were being added to the database's cart table they were not being added to the shoppingCart object so it was returning empty. Initially the addCart method was reurning a blank ShoppingCart object, instead of returning the new/updated cart. At first, we attempted to call the GetByUserId method, as it returns the current ShoppingCart that is saved in the database. However, this way resulted in many more bugs and did not work as intended. As a workaround, we inserted the logic of the method to circumvent the error. This is now returning the updated ShoppingCart, while still keeping the application working. Although the return is now fixed,  we are still having trouble on Postman. The error that we are receiving still states that our return is empty. (Side Note: The insert of the GetByUserId logic is a temporary fix and is a bad practice of duplicated code, thus is something we would like to see changed in the future).
   ![addCartReturnBugFix](https://github.com/paulmlaviwa/EasyShop/assets/146879419/949d563b-73df-4997-84f9-a72b905835fc)
+  ![addCartReturnBugFix](https://github.com/paulmlaviwa/EasyShop/assets/14105717/f6770a82-cdbf-4383-b32c-08fad4771812)
+
 
 
   3: JavaScript-  Cart was not being loaded at the same time as the database, which would require a refresh to show new products in cart
