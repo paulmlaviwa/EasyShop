@@ -109,7 +109,7 @@ public class MySqlShoppingCart extends MySqlDaoBase implements ShoppingCartDao {
                 statement2.setInt(1, userId);
                 ResultSet result2 = statement2.executeQuery();
 
-                while (result.next()) {
+                while (result2.next()) {
                     int productID = result2.getInt("product_id");
                     String name = result2.getString("name");
                     BigDecimal price = result2.getBigDecimal("price");

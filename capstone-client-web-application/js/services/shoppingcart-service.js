@@ -12,6 +12,7 @@ class ShoppingCartService {
 
             axios.post(url, {})
                 .then(response => {
+                    console.log(response)
                     this.setCart(response.data);
                     this.updateCartDisplay();
 
