@@ -29,7 +29,7 @@ public class MySqlShoppingCart extends MySqlDaoBase implements ShoppingCartDao {
                 " ON products.product_id = shopping_cart.product_id " +
                 " JOIN users " +
                 " ON shopping_cart.user_id = users.user_id" +
-                " WHERE user_id = ? ";
+                " WHERE shopping_cart.user_id = ?; ";
 
         try (Connection connection = getConnection())
         {
