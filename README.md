@@ -1,5 +1,4 @@
 Welcome to EasyShop!
-![easyShopHome1](https://github.com/paulmlaviwa/EasyShop/assets/146879419/a3f988ad-2a96-4e30-8846-1304e0667df3)
 ![easyShopHome2](https://github.com/paulmlaviwa/EasyShop/assets/146879419/76455ed3-8f87-4bcf-888a-df12bba154eb)
 
 Capstone Overview:
@@ -33,16 +32,20 @@ Can't shop without a Shopping Cart! So we added one.
 Issues that we encountered as we worked: 
   1: Setting up/Getting Started- This project presented a challenge that we had not yet encountered as we had only worked with code we ourselves had written. Therefore we knew each piece and how it got there. Working with our code made it easier to find any bugs since we were familiar with it and could quickly pinpoint the issue. This project was slow starting because we had to spend time getting comfortable with a large ammount of code for an application we hadn't seen or worked with previously, but also gave us practice in something that will be a daily occurance in our careers.
   
-  2: Postman- Had trouble with postman tests because while items were being added to the database's cart table they were not being added to the shoppingCart object so it was returning empty. 
+  2: Postman- Had trouble with postman tests because while items were being added to the database's cart table they were not being added to the shoppingCart object so it was returning empty. Initially the addCart method was reurning a blank ShoppingCart object, instead of returning the new/updated cart. At first, we attempted to call the GetByUserId method, as it returns the current ShoppingCart that is saved in the database. However, this way resulted in many more bugs and did not work as intended. As a workaround, we inserted the logic of the method to circumvent the error. This is now returning the updated ShoppingCart, while still keeping the application working. Although the return is now fixed,  we are still having trouble on Postman. The error that we are receiving still states that our return is empty. (Side Note: The insert of the GetByUserId logic is a temporary fix and is a bad practice of duplicated code, thus is something we would like to see changed in the future).
+  
+  ![addCartReturnBugFix](https://github.com/paulmlaviwa/EasyShop/assets/14105717/f6770a82-cdbf-4383-b32c-08fad4771812)
 
-  3: JavaScript- When adding items to the cart it would notify with a "add to cart successful" message but the cart icom would still show zero. When clocking into the cart it also showed as empty until the refresh button was used, after that it dispalyed the added items properly. To fix this we went into the 
 
-Code Highlight:
+
+  3: JavaScript-  Cart was not being loaded at the same time as the database, which would require a refresh to show new products in cart
+Fixed by examining Javascript to locate the addToCart method. Noticed that addToCart was not updating the cart everytime something was added. Provided new code to addToCart that would throw the load method and update the cart everytime a new item was added
+NEW
+  Code Highlight:
 ![easyShopJSFix](https://github.com/paulmlaviwa/EasyShop/assets/146879419/82cc046e-a894-428f-838d-fd4b3e56373b)
 
 Upcoming Features:
-  Add User Profile-
-  Add Checkout Feature-
-  
-  
+  <img width="3191" alt="Future_of_Easy_Shop" src="https://github.com/paulmlaviwa/EasyShop/assets/146879419/faecdf14-184c-4260-8051-7531ee3583a9">
+
+
  
