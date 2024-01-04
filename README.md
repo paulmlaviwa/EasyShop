@@ -44,7 +44,7 @@ NEW
 ![easyShopJSFix](https://github.com/paulmlaviwa/EasyShop/assets/146879419/82cc046e-a894-428f-838d-fd4b3e56373b)
 
 Upcoming Features:
-  
-  
+  <img width="3191" alt="Future_of_Easy_Shop" src="https://github.com/paulmlaviwa/EasyShop/assets/146879419/faecdf14-184c-4260-8051-7531ee3583a9">
+
 
  
