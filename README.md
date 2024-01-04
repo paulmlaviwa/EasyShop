@@ -1,5 +1,4 @@
 Welcome to EasyShop!
-![easyShopHome1](https://github.com/paulmlaviwa/EasyShop/assets/146879419/a3f988ad-2a96-4e30-8846-1304e0667df3)
 ![easyShopHome2](https://github.com/paulmlaviwa/EasyShop/assets/146879419/76455ed3-8f87-4bcf-888a-df12bba154eb)
 
 Capstone Overview:
