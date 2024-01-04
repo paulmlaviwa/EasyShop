@@ -8,6 +8,7 @@ import org.springframework.web.server.ResponseStatusException;
 import org.yearup.data.ProductDao;
 import org.yearup.data.ShoppingCartDao;
 import org.yearup.data.UserDao;
+import org.yearup.data.mysql.MySqlShoppingCart;
 import org.yearup.models.ShoppingCart;
 import org.yearup.models.ShoppingCartItem;
 import org.yearup.models.User;
@@ -58,7 +59,7 @@ public class ShoppingCartController
     // https://localhost:8080/cart/products/15 (15 is the productId to be added
     @PostMapping("/products/{productId}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
-    public ShoppingCartItem addCart(@PathVariable int productId, @RequestBody ShoppingCartItem shoppingCartItem, Principal principal){
+    public ShoppingCart addCart(@PathVariable int productId, Principal principal){
         try
         {
             // get the currently logged in username
@@ -67,7 +68,7 @@ public class ShoppingCartController
             User user = userDao.getByUserName(userName);
             int userId = user.getId();
             // use the shoppingcartDao to get all items in the cart and return the cart
-            return shoppingCartDao.addCart(userId, productId, shoppingCartItem);
+            return shoppingCartDao.addCart(userId, productId);
         }
         catch(Exception e)
         {
@@ -82,5 +83,23 @@ public class ShoppingCartController
 
     // add a DELETE method to clear all products from the current users cart
     // https://localhost:8080/cart
+    @DeleteMapping("")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+    public ShoppingCart removeCart(Principal principal){
+        try
+        {
+            // get the currently logged in username
+            String userName = principal.getName();
+            // find database user by userId
+            User user = userDao.getByUserName(userName);
+            int userId = user.getId();
+            // use the shoppingcartDao to remove all items in the cart and return the cart
+            return shoppingCartDao.removeCart(userId);
+        }
+        catch(Exception e)
+        {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
+        }
+    }
 
 }
