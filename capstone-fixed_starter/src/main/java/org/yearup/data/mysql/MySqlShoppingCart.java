@@ -17,6 +17,7 @@ import java.sql.SQLException;
 @Component
 public class MySqlShoppingCart extends MySqlDaoBase implements ShoppingCartDao {
 
+    private ShoppingCartDao shoppingCartDao;
     @Autowired
     public MySqlShoppingCart(DataSource dataSource) {
         super(dataSource);
@@ -95,7 +96,39 @@ public class MySqlShoppingCart extends MySqlDaoBase implements ShoppingCartDao {
                 quantityStatement.executeUpdate();
                 System.out.println("Item with Product ID: " + productId + " successfully added to cart and quantity updated.");
             }
-        } catch (SQLException e) {
+            String query = " SELECT shopping_cart.quantity, products.*, users.username " +
+                    " FROM shopping_cart " +
+                    " JOIN products " +
+                    " ON products.product_id = shopping_cart.product_id " +
+                    " JOIN users " +
+                    " ON shopping_cart.user_id = users.user_id" +
+                    " WHERE shopping_cart.user_id = ?; ";
+
+            try (Connection connection2 = getConnection()) {
+                PreparedStatement statement2 = connection2.prepareStatement(query);
+                statement2.setInt(1, userId);
+                ResultSet result2 = statement2.executeQuery();
+
+                while (result.next()) {
+                    int productID = result2.getInt("product_id");
+                    String name = result2.getString("name");
+                    BigDecimal price = result2.getBigDecimal("price");
+                    int category = result2.getInt("category_id");
+                    String description = result2.getString("description");
+                    String color = result2.getString("color");
+                    int stock = result2.getInt("stock");
+                    boolean isFeatured = result2.getBoolean("featured");
+                    String imageUrl = result2.getString("image_url");
+                    int quantity = result2.getInt("quantity");
+                    Product product = new Product(productID, name, price, category, description, color, stock, isFeatured, imageUrl);
+                    ShoppingCartItem shoppingCartItem = new ShoppingCartItem();
+                    shoppingCartItem.setProduct(product);
+                    shoppingCartItem.setQuantity(quantity);
+                    shoppingCart.add(shoppingCartItem);
+                }
+            }
+        }
+        catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return shoppingCart;

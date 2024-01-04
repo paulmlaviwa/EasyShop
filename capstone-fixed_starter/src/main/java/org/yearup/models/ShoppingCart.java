@@ -42,5 +42,4 @@ public class ShoppingCart
 
         return total;
     }
-
 }
