@@ -68,55 +68,54 @@ public class MySqlCategoryDao extends MySqlDaoBase implements CategoryDao
 
 
     @Override
-    public Category create(Category category)
-    {
-        // create a new category
-        String sql = "INSERT INTO categories(name, description) " +
-                " VALUES (?, ?);";
+    public Category create(Category category) {
+        String sql = "INSERT INTO categories(name, description) VALUES (?, ?);";
         try (Connection connection = getConnection()) {
             PreparedStatement statement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             statement.setString(1, category.getName());
             statement.setString(2, category.getDescription());
 
-
             int rowsAffected = statement.executeUpdate();
 
-
             if (rowsAffected > 0) {
-                // Retrieve the generated keys
                 ResultSet generatedKeys = statement.getGeneratedKeys();
-
-
                 if (generatedKeys.next()) {
-                    // Retrieve the auto-incremented ID
-                    int orderId = generatedKeys.getInt(1);
+                    int categoryId = generatedKeys.getInt(1);
 
+                    // Create a new Category object using the provided data
+                    Category createdCategory = new Category();
+                    createdCategory.setCategoryId(categoryId);
+                    createdCategory.setName(category.getName());
+                    createdCategory.setDescription(category.getDescription());
+                    System.out.println("Category Created Successfully!");
 
-                    // Retrieve newly inserted category
-                    return getById(orderId);
+                    return createdCategory;
                 }
             }
+            // Handle the case where no category was created or ID wasn't generated
+            throw new RuntimeException("Failed to create category or retrieve ID.");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return null;
     }
+
 
 
     @Override
     public void update(int categoryId, Category category)
     {
         // update category
-        String sql = "UPDATE categories " +
+        String sql = " UPDATE categories " +
                 " SET name = ? " +
                 "   , description = ? " +
                 " WHERE category_id = ?;";
         try(Connection connection = getConnection()){
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setInt(1, category.getCategoryId());
-            statement.setString(2, category.getName());
-            statement.setString(3, category.getDescription());
+            statement.setString(1, category.getName());
+            statement.setString(2, category.getDescription());
+            statement.setInt(3, category.getCategoryId());
             statement.executeUpdate();
+            System.out.println("Category successfully updated!");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

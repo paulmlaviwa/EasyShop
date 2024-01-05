@@ -9,6 +9,8 @@ import org.yearup.data.CategoryDao;
 import org.yearup.data.ProductDao;
 import org.yearup.models.Category;
 import org.yearup.models.Product;
+import org.springframework.http.ResponseEntity;
+
 
 import java.util.List;
 
@@ -53,22 +55,16 @@ public class CategoriesController
     // add the appropriate annotation for a get action
     @GetMapping("{id}")
     @PreAuthorize("permitAll()")
-    public Category getById(@PathVariable int id)
-    {
-        try
-        {
-            var category = categoryDao.getById(id);
+    public Category getById(@PathVariable int id) {
+        var category = categoryDao.getById(id);
 
-            if(category == null)
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        if (category == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found");
+        }
 
-            return category;
-        }
-        catch(Exception ex)
-        {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
-        }
+        return category;
     }
+
 
     // the url to return all products in category 1 would look like this
     // https://localhost:8080/categories/1/products
@@ -91,21 +87,18 @@ public class CategoriesController
         }
     }
 
-    // add annotation to call this method for a POST action
+
     @PostMapping
-    // add annotation to ensure that only an ADMIN can call this function
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public Category addCategory(@RequestBody Category category)
-    {
-        try
-        {
-            return categoryDao.create(category);
-        }
-        catch(Exception ex)
-        {
+    public ResponseEntity<Category> addCategory(@RequestBody Category category) {
+        try {
+            Category createdCategory = categoryDao.create(category);
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdCategory);
+        } catch (Exception ex) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
         }
     }
+
 
     // add annotation to call this method for a PUT (update) action - the url path must include the categoryId
     @PutMapping("{id}")
@@ -125,16 +118,14 @@ public class CategoriesController
 
     // add annotation to call this method for a DELETE action - the url path must include the categoryId
     @DeleteMapping("{id}")
-    // add annotation to ensure that only an ADMIN can call this function
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public void deleteCategory(@PathVariable int id)
-    {
-        try{
+    public ResponseEntity<Void> deleteCategory(@PathVariable int id) {
+        try {
             categoryDao.delete(id);
-        }
-        catch(Exception ex)
-        {
+            return ResponseEntity.noContent().build();
+        } catch (Exception ex) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
         }
     }
+
 }
