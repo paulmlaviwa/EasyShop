@@ -1,8 +1,11 @@
 **Welcome to EasyShop!**
+
 ![easyShopHome2](https://github.com/paulmlaviwa/EasyShop/assets/146879419/76455ed3-8f87-4bcf-888a-df12bba154eb)
 
 **Capstone Overview:**
   Easy Shop is an already existing e-commerce application for technology and electronics. Our team was tasked with releasing Version 2 by fixing bugs that had been reported by users, implementing and editing existing methods, and adding new features.
+
+  ![easyshopdiagram](https://github.com/paulmlaviwa/EasyShop/assets/146879419/e6e8d02c-05fd-4272-9d65-155b1fb07706)
 
   Bugs: 
   1: _Search Filter Bug_ - returned the incorrect results because it had the wrong ammount of prepared statements. We also wrote unit tests to guide us in solving the issue.![image](https://github.com/paulmlaviwa/EasyShop/assets/146879419/38f0be1a-b0b6-45aa-bd5c-24b794072812)
