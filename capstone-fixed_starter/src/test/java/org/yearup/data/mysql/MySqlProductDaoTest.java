@@ -3,9 +3,12 @@ package org.yearup.data.mysql;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.yearup.models.Product;
 
 
+import javax.sql.DataSource;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.List;
@@ -13,16 +16,20 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-
+@SpringBootTest
 class MySqlProductDaoTest extends BaseDaoTestClass
 {
+    @Autowired
     private MySqlProductDao dao;
+
+    @Autowired
+    protected DataSource dataSource;
 
 
     @BeforeEach
     public void setup()
     {
-        dao = new MySqlProductDao(dataSource);
+        
     }
 
 
